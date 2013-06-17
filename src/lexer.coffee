@@ -771,6 +771,7 @@ HEREDOC    = /// ^ ("""|''') ([\s\S]*?) (?:\n[^\n\S]*)? \1 ///
 
 OPERATOR   = /// ^ (
   ?: [-=]>             # function
+   | \|>               # torrefy macro
    | [-+*/%<>&|^!?=]=  # compound assign / compare
    | >>>=?             # zero-fill right shift
    | ([-+:])\1         # doubles
@@ -784,6 +785,8 @@ WHITESPACE = /^[^\n\S]+/
 COMMENT    = /^###([^#][\s\S]*?)(?:###[^\n\S]*|(?:###)$)|^(?:\s*#(?!##[^#]).*)+/
 
 CODE       = /^[-=]>/
+
+MACRO      = /^\|>/
 
 MULTI_DENT = /^(?:\n[^\n\S]*)+/
 
