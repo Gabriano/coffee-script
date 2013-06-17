@@ -104,6 +104,7 @@ grammar =
     o 'Value'
     o 'Invocation'
     o 'Code'
+    o 'Macro'
     o 'Operation'
     o 'Assign'
     o 'If'
@@ -194,6 +195,15 @@ grammar =
   FuncGlyph: [
     o '->',                                     -> 'func'
     o '=>',                                     -> 'boundfunc'
+  ]
+
+  Macro: [
+    o 'PARAM_START ParamList PARAM_END MacroGlyph Block', -> new Macro $2 $5
+    o 'MacroGlyph Block',                        -> new Macro [] $2
+  ]
+  
+  MacroGlyph: [
+    o '|>',                                      -> 'macro'
   ]
 
   # An optional, trailing comma.
