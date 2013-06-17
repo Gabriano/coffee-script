@@ -1366,7 +1366,7 @@ exports.Macro = class Macro extends Base
   jumps: NO
     
   compileNode: (o) ->
-    42
+    [@makeCode("42")]
     # sys.print(@params)
     # sys.print(@body)
     
