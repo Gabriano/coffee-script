@@ -1354,6 +1354,22 @@ exports.Code = class Code extends Base
   traverseChildren: (crossScope, func) ->
     super(crossScope, func) if crossScope
 
+#### Macro
+
+exports.Macro = class Macro extends Base
+  constructor:  (params, body) ->
+    @params = params or []
+    @body = body or new Block
+
+  children: ['params', 'body']
+
+  jumps: NO
+    
+  compileNode: (o) ->
+    42
+    # sys.print(@params)
+    # sys.print(@body)
+    
 #### Param
 
 # A parameter in a function definition. Beyond a typical Javascript parameter,

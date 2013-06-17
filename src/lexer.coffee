@@ -394,6 +394,7 @@ exports.Lexer = class Lexer
     if match = OPERATOR.exec @chunk
       [value] = match
       @tagParameters() if CODE.test value
+      @tagParameters() if MACRO.test value    
     else
       value = @chunk.charAt 0
     tag  = value
