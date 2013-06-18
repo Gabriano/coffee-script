@@ -394,7 +394,8 @@ exports.Lexer = class Lexer
     if match = OPERATOR.exec @chunk
       [value] = match
       @tagParameters() if CODE.test value
-      @tagParameters() if MACRO.test value    
+      @tagParameters() if MACRO.test value
+      @morphMacro() if MACRO.test value
     else
       value = @chunk.charAt 0
     tag  = value
@@ -469,6 +470,18 @@ exports.Lexer = class Lexer
           else return this
     this
 
+  # morph
+  # [IDENTIFIER ident] [= =] params [|> |>] body
+  # into
+  # [MACRO_IDENTIFIER ident] [= =] params [|> |>] body
+  morphMacro: ->
+    {tokens} = this
+    i = tokens.length - 1
+    while tokens[i][0] != '='
+      i -= 1
+    tokens[i - 1][0] = 'MACRO_IDENTIFIER'
+    this
+    
   # Close up all remaining open blocks at the end of the file.
   closeIndentation: ->
     @outdentToken @indent

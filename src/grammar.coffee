@@ -101,10 +101,10 @@ grammar =
   # is one. Blocks serve as the building blocks of many other rules, making
   # them somewhat circular.
   Expression: [
+    o 'Macro'
     o 'Value'
     o 'Invocation'
     o 'Code'
-    o 'Macro'
     o 'Operation'
     o 'Assign'
     o 'If'
@@ -127,6 +127,10 @@ grammar =
   # A literal identifier, a variable name or property.
   Identifier: [
     o 'IDENTIFIER',                             -> new Literal $1
+  ]
+
+  MacroIdentifier: [
+    o 'MACRO_IDENTIFIER',                       -> new Literal $1
   ]
 
   # Alphanumerics are separated from the other **Literal** matchers because
@@ -198,10 +202,10 @@ grammar =
   ]
 
   Macro: [
-    o 'PARAM_START ParamList PARAM_END MacroGlyph Block', -> new Macro $2 $5
-    o 'MacroGlyph Block',                        -> new Macro [] $2
+    o 'MACRO_IDENTIFIER = PARAM_START ParamList PARAM_END MacroGlyph Block', -> new Macro $1 $4 $7
+    o 'MACRO_IDENTIFIER = MacroGlyph Block',           -> new Macro $1 [] $4
   ]
-  
+
   MacroGlyph: [
     o '|>',                                      -> 'macro'
   ]

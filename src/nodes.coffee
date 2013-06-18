@@ -7,7 +7,7 @@ Error.stackTraceLimit = Infinity
 
 {Scope} = require './scope'
 {RESERVED, STRICT_PROSCRIBED} = require './lexer'
-
+    
 # Import the helpers we plan to use.
 {compact, flatten, extend, merge, del, starts, ends, last, some,
 addLocationDataFn, locationDataToString, throwSyntaxError} = require './helpers'
@@ -1366,9 +1366,7 @@ exports.Macro = class Macro extends Base
   jumps: NO
     
   compileNode: (o) ->
-    [@makeCode("42")]
-    # sys.print(@params)
-    # sys.print(@body)
+    return new Literal "b = 20"
     
 #### Param
 
