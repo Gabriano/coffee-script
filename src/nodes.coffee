@@ -1357,16 +1357,33 @@ exports.Code = class Code extends Base
 #### Macro
 
 exports.Macro = class Macro extends Base
-  constructor:  (params, body) ->
-    @params = params or []
+  constructor:  (@name, paramList, body) ->
+    @paramList = paramList or []
     @body = body or new Block
 
   children: ['params', 'body']
 
   jumps: NO
-    
+
+  makeMacro: (name, params, body) ->
+    console.log(params)
+    return """
+    macro #{name} {
+        case (#{params}) => {
+            #{body}
+        }
+      }
+    """
+
   compileNode: (o) ->
-    return new Literal "b = 20"
+    paramStr = ""
+
+    for p,i in @paramList
+      paramStr += " (,) " if i
+      @paramList[i] = p.compileToFragments o
+      paramStr += fragmentsToText @paramList[i]
+    
+    return [@makeCode @makeMacro(@name, paramStr, fragmentsToText (@body.compileToFragments o))]
     
 #### Param
 

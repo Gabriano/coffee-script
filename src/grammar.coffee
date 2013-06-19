@@ -129,9 +129,9 @@ grammar =
     o 'IDENTIFIER',                             -> new Literal $1
   ]
 
-  MacroIdentifier: [
-    o 'MACRO_IDENTIFIER',                       -> new Literal $1
-  ]
+  # MacroIdentifier: [
+  #   o 'MACRO_IDENTIFIER',                       -> new Literal $1
+  # ]
 
   # Alphanumerics are separated from the other **Literal** matchers because
   # they can also serve as keys in object literals.
@@ -202,8 +202,8 @@ grammar =
   ]
 
   Macro: [
-    o 'MACRO_IDENTIFIER = PARAM_START ParamList PARAM_END MacroGlyph Block', -> new Macro $1 $4 $7
-    o 'MACRO_IDENTIFIER = MacroGlyph Block',           -> new Macro $1 [] $4
+    o 'MACRO_IDENTIFIER = PARAM_START ParamList PARAM_END MacroGlyph Block', -> new Macro $1, $4, $7
+    o 'MACRO_IDENTIFIER = MacroGlyph Block',     -> new Macro $1, [], $4
   ]
 
   MacroGlyph: [
