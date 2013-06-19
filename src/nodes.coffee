@@ -1379,9 +1379,10 @@ exports.Macro = class Macro extends Base
     paramStr = ""
 
     for p,i in @paramList
-      paramStr += " (,) " if i
+      paramStr += " , " if i
       @paramList[i] = p.compileToFragments o
       paramStr += fragmentsToText @paramList[i]
+      paramStr += ":expr"
     
     return [@makeCode @makeMacro(@name, paramStr, fragmentsToText (@body.compileToFragments o))]
     
