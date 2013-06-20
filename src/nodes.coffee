@@ -1370,7 +1370,13 @@ exports.Macro = class Macro extends Base
         case (#{params}) => {
             #{body}
         }
-      }"""
+      }""" if params
+
+    return """macro #{name} {
+        case => {
+            #{body}
+        }
+      }""" 
 
   compileNode: (o) ->
     paramStr = ""
