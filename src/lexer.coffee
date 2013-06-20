@@ -472,14 +472,21 @@ exports.Lexer = class Lexer
 
   # morph
   # [IDENTIFIER ident] [= =] params [|> |>] body
+  # and
+  # [IDENTIFIER ident] [|> |>] body
   # into
   # [MACRO_IDENTIFIER ident] [= =] params [|> |>] body
+  # and
+  # [MACRO_IDENTIFIER ident] [|> |>] body
   morphMacro: ->
     {tokens} = this
     i = tokens.length - 1
-    while tokens[i][0] != '='
-      i -= 1
-    tokens[i - 1][0] = 'MACRO_IDENTIFIER'
+    if tokens[i][0] == 'IDENTIFIER'
+      tokens[i][0] = 'MACRO_IDENTIFIER'
+    else
+      while tokens[i][0] != '='
+        i -= 1
+      tokens[i - 1][0] = 'MACRO_IDENTIFIER'
     this
     
   # Close up all remaining open blocks at the end of the file.

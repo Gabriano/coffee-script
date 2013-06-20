@@ -204,6 +204,7 @@ grammar =
   Macro: [
     o 'MACRO_IDENTIFIER = PARAM_START ParamList PARAM_END MacroGlyph Block', -> new Macro $1, $4, $7
     o 'MACRO_IDENTIFIER = MacroGlyph Block',     -> new Macro $1, [], $4
+    o 'MACRO_IDENTIFIER   MacroGlyph Block',     -> new Macro $1, [], $3
   ]
 
   MacroGlyph: [
