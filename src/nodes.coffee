@@ -1366,14 +1366,11 @@ exports.Macro = class Macro extends Base
   jumps: NO
 
   makeMacro: (name, params, body) ->
-    console.log(params)
-    return """
-    macro #{name} {
+    return """macro #{name} {
         case (#{params}) => {
             #{body}
         }
-      }
-    """
+      }"""
 
   compileNode: (o) ->
     paramStr = ""
@@ -1383,8 +1380,9 @@ exports.Macro = class Macro extends Base
       @paramList[i] = p.compileToFragments o
       paramStr += fragmentsToText @paramList[i]
       paramStr += ":expr"
-    
-    return [@makeCode @makeMacro(@name, paramStr, fragmentsToText (@body.compileToFragments o))]
+
+    bodyText = fragmentsToText (@body.compileToFragments o)
+    return [@makeCode @makeMacro(@name, paramStr, bodyText[..-2])]    # skip final ;
     
 #### Param
 
